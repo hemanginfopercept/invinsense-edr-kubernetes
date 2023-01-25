@@ -1,0 +1,15 @@
+steps:
+ - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+   entrypoint: 'gcloud'
+   args: ['gcloud', 'container', 'clusters', 'get-credentials', 'ninjavan-it-soc-cluster', '--region', 'asia-south1', '--project', 'project-1-369110' ]
+   env:
+   - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
+   - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a'
+# Set up kustomize
+      - name: Set up Kustomize
+        uses: imranismail/setup-kustomize@v1
+
+      # Deploy to the GKE cluster
+      - name: Deploy
+        run: |-
+          kubectl apply -k envs/gke/
