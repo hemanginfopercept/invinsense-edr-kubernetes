@@ -6,6 +6,12 @@ steps:
    - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
    - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a'
 # Set up kustomize
+jobs:
+  setup-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Set up Kustomize
         uses: imranismail/setup-kustomize@v1
 
