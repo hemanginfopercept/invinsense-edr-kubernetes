@@ -13,7 +13,7 @@ stages:
 steps:
   clone:
     title: Cloning main repository...
-    type: git-clone
+    type: [git-clone]
     stage: clone
     arguments:
       repo: https://github.com/hemanginfopercept/invinsense-edr-kubernetes.git
@@ -22,7 +22,7 @@ steps:
 
   deploy:
     title: Deploying to Staging using Kustomize...
-    type: freestyle
+    type: [freestyle]
     stage: deploy
     working_directory: ${{clone}}
     arguments:
