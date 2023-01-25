@@ -5,17 +5,37 @@ steps:
    env:
    - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
    - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a'
+
+stages:
+  - clone
+  - deploy
+
+steps:
+  clone:
+    title: Cloning main repository...
+    type: git-clone
+    stage: clone
+    arguments:
+      repo: https://github.com/hemanginfopercept/invinsense-edr-kubernetes.git
+      git: github
+      revision: master
+
+  deploy:
+    title: Deploying to Staging using Kustomize...
+    type: freestyle
+    stage: deploy
+    working_directory: ${{clone}}
+    arguments:
+      image: codefresh/kubectl:1.14.9
+      commands:
+        - kubectl apply -k envs/gke/
+
 # Set up kustomize
-jobs:
-  setup-deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Set up Kustomize
-        uses: imranismail/setup-kustomize@v1
-
+#    steps:
+#      - name: Set up Kustomize
+#        uses: imranismail/setup-kustomize@v1
+#
       # Deploy to the GKE cluster
-      - name: Deploy
-        run: |-
-          kubectl apply -k envs/gke/
+#      - name: Deploy
+#        run: |-
+#          kubectl apply -k envs/gke/
